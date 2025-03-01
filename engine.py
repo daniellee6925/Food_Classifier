@@ -39,7 +39,7 @@ def train_step(
     model.eval()
 
     # set train loss and acc
-    train_loss, train_acc = 0
+    train_loss, train_acc = 0, 0
 
     # Loop through batches in DataLoader
     for batch, (X, y) in enumerate(dataloader):
@@ -190,5 +190,5 @@ def train(
         results["test_loss"].append(test_loss)
         results["test_acc"].append(test_acc)
 
-        # return results
-        return results
+    # return results
+    return results
