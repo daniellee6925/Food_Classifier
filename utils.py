@@ -5,7 +5,7 @@ from pathlib import Path
 import torch
 
 
-def save_model(model: torch.nn.Module, traget_dir: str, model_name: str):
+def save_model(model: torch.nn.Module, target_dir: str, model_name: str):
     """
     Saves a PyTorch model to a target directory
 
@@ -16,7 +16,7 @@ def save_model(model: torch.nn.Module, traget_dir: str, model_name: str):
     """
 
     # create target directory
-    traget_dir_path = Path(traget_dir)
+    traget_dir_path = Path(target_dir)
     traget_dir_path.mkdir(parents=True, exist_ok=False)
 
     # create model save path
