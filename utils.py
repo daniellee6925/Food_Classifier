@@ -12,16 +12,16 @@ def save_model(model: torch.nn.Module, target_dir: str, model_name: str):
     Args:
         model: PyTorch model to save
         traget_dir: directory for saving the model
-        model_name:name of model
+        model_name: name of model
     """
 
     # create target directory
-    traget_dir_path = Path(target_dir)
-    traget_dir_path.mkdir(parents=True, exist_ok=False)
+    target_dir_path = Path(target_dir)
+    target_dir_path.mkdir(parents=True, exist_ok=True)
 
     # create model save path
     assert model_name.endswith(".pth"), "model name should end with '.pth'"
-    model_save_path = traget_dir_path / model_name
+    model_save_path = target_dir_path / model_name
 
     # save the model state_dict()
     print(f"[INFO] Saving model to: {model_save_path}")
