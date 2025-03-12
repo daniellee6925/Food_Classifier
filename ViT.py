@@ -53,6 +53,16 @@ class PatchEmbeddings(nn.Module):
 
 
 class MultiHeadSelfAttentionBlock(nn.Module):
+    """
+    Multi-head Attention Block from nn.MultiheadAttention
+    Core of the Transformer Architecture
+
+    Args:
+        embedding_dim (int): Size of embedding to turn image into. Defaults to 768.
+        num_heads (int): number of heads for multi-head. Defaults to 12.
+        attn_dropout (float): Percent of layers to randomly "turn off" Defaults to 0.0.
+    """
+
     def __init__(self, embedding_dim=768, num_heads=12, attn_dropout=0.0):
         super().__init__()
         self.layer_norm = nn.LayerNorm(normalized_shape=embedding_dim)
@@ -72,6 +82,16 @@ class MultiHeadSelfAttentionBlock(nn.Module):
 
 
 class MLPBlock(nn.Module):
+    """
+    Multi-Layer Perceptron Block
+    Applies Non-Linear Transformation to "Learn" through back probagation
+
+    Args:
+        embedding_dim (int): Size of embedding to turn image into. Defaults to 768.
+        mlp_size (int): Number of hidden units in the MLP block, typically larger than embedding_dim. Defaults to 3072.
+        dropout (float): Percent of layers to randomly "turn off" Defaults to 0.0.
+    """
+
     def __init__(self, embedding_dim=768, mlp_size=3072, dropout=0.0, device="cuda"):
         super().__init__()
         self.device = device  # Store device
@@ -94,6 +114,19 @@ class MLPBlock(nn.Module):
 
 
 class TransformerEncoderBlock(nn.Module):
+    """
+    Transformer Encoder Block
+    A single encoder block for a Vision Transformer (ViT), consisting of multi-head self-attention and an MLP block.
+
+    Args:
+        embedding_dim (int): Dimensionality of token embeddings. Defaults to 768.
+        num_heads (int): Number of attention heads in the multi-head self-attention mechanism. Defaults to 12.
+        mlp_size (int): Number of hidden units in the MLP block, typically larger than embedding_dim. Defaults to 3072.
+        mlp_dropout (float): Dropout rate applied within the MLP block. Defaults to 0.1.
+        attn_dropout (float): Dropout rate applied to the attention scores. Defaults to 0.0.
+        device (str): Device on which the model runs ("cpu" or "cuda"). Defaults to "cuda".
+    """
+
     def __init__(
         self,
         embedding_dim=768,
@@ -131,6 +164,26 @@ class TransformerEncoderBlock(nn.Module):
 
 
 class ViT(nn.Module):
+    """
+    Vision Transformer (ViT) Model
+    Implements a Vision Transformer for image classification by dividing an image into patches and processing them through
+    transformer encoder layers.
+
+    Args:
+        img_size (int): Size of the input image (assumed square). Defaults to 224.
+        in_channels (int): Number of input image channels. Defaults to 3 (RGB).
+        patch_size (int): Size of each image patch. Defaults to 16.
+        num_transformer_layers (int): Number of transformer encoder layers. Defaults to 12.
+        embedding_dim (int): Dimensionality of token embeddings. Defaults to 768.
+        mlp_size (int): Number of hidden units in the MLP block, typically larger than embedding_dim. Defaults to 3072.
+        num_heads (int): Number of attention heads in the multi-head self-attention mechanism. Defaults to 12.
+        attn_dropout (float): Dropout rate applied to attention scores. Defaults to 0.0.
+        mlp_dropout (float): Dropout rate applied within the MLP block. Defaults to 0.1.
+        embedding_dropout (float): Dropout rate applied to the token embeddings. Defaults to 0.1.
+        num_classes (int): Number of output classes for classification. Defaults to 1000 (ImageNet).
+        device (str): Device on which the model runs ("cpu" or "cuda"). Defaults to "cuda".
+    """
+
     def __init__(
         self,
         img_size=224,
